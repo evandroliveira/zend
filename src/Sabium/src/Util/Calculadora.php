@@ -29,4 +29,11 @@ class Calculadora
         $dividir = $nu1 / $nu2;
         return $dividir;
     }
+   /* {
+        if ($nu2 == 0) {
+            throw new ArithmeticException('Division by Zero');
+        }
+        $dividir = $nu1 / $nu2;
+        return $dividir;
+    }*/
 }
