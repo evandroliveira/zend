@@ -27,7 +27,6 @@ class PessoaBodyValidator implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         // $response = $handler->handle($request);
-        
         $dados = $request->getBody()->getContents();
         $object = $this->serializer->deserialize($dados, Pessoa::class, 'json');   
 

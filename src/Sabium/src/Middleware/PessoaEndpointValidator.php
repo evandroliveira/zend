@@ -7,7 +7,6 @@ namespace Sabium\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Sabium\Repository\PessoaRepository;
 use Psr\Http\Server\MiddlewareInterface;
-use Zend\Diactoros\Response\EmptyResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\JsonResponse;

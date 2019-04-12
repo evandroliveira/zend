@@ -59,6 +59,7 @@ class ConfigProvider
                 Handler\RetrievePessoaHandler::class => Handler\RetrievePessoaFactory::class,
                 Handler\DeletePessoaHandler::class => Handler\DeletePessoaHandlerFactory::class,
                 Container\JSONMapperFactory::class => Container\JSONMapperFactory::class,
+                Container\MonologFactory::class => Container\MonologFactory::class,
             ],
         ];
     }

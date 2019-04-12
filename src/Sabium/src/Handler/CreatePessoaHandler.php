@@ -4,13 +4,12 @@ declare (strict_types = 1);
 
 namespace Sabium\Handler;
 
+use Sabium\Entity\Pessoa;
 use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sabium\Repository\PessoaRepository;
-use Zend\Diactoros\Response\TextResponse;
-use Sabium\Entity\Pessoa;
-use Zend\Diactoros\Response\JsonResponse;
 
 class CreatePessoaHandler implements RequestHandlerInterface
 {
@@ -18,66 +17,15 @@ class CreatePessoaHandler implements RequestHandlerInterface
     {
         $this->repository = $repository;
         $this->serializer = $serializer;
+
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $dados = $request->getAttribute(Pessoa::class);
-        
-        $retorno = $this->repository->insert($dados);
+        $dados = $request->getAttribute(Pessoa::class);             
+        $retorno = $this->repository->insert($dados);   
 
-        return new JsonResponse('OK');
+        return new JsonResponse('Inserido com sucesso!');
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*
-        //$result = $this->repository->findBySituation($request->getAttribute('idsituacao'));
-
-        return new TextResponse(
-            $this->serializer->serialize($result, 'xml'),
-            200,
-            ['Content-Type' => ['application/xhtml+xml']]
-        );
-        */
-        /*     
-        /*try {
-            $result = $this->repository->insert($this->jsonMapper->map(json_decode($request->getBody()->getContents()), new Pessoa()));
-            return $result != null ? new JsonResponse($result) : new EmptyResponse(404);
-        } catch (RepositoryPDOException $e) {
-            return new EmptyResponse(500);
-        }*/
-
-
-
-    /*
-    public function handle(ServerRequestInterface $request): ResponseInterface
-    {
-        $result =  $this->jsonMapper->map(json_decode($request->getBody()->getContents()), new Pessoa());
-
-        try {
-            $validator = new ValidatorMapper($result, $this->repository);
-            var_dump($validator = new ValidatorMapper($result, $this->repository));
-            return  $validator->isValid() ? $this->insert($result) : new EmptyResponse(400);
-        } catch (RepositoryPDOException $e) {
-            return new EmptyResponse(500);
-        }
-    }
-
-    private function insert($result)
-    {
-        $pessoa = $this->repository->insert($result);
-        return new JsonResponse($pessoa);
-    }*/

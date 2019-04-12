@@ -17,6 +17,8 @@ return [
             Sabium\Handler\PessoaHandler::class => Sabium\Handler\PessoaHandlerFactory::class,
             Sabium\Handler\RetriveIdadePessoa::class => Sabium\Handler\RetriveIdadePessoaFactory::class,
             Sabium\Handler\UpdatePessoaHandler::class => Sabium\Handler\UpdatePessoaHandlerFactory::class,
+            Sabium\Middleware\Monolog::class => Sabium\Middleware\MonologFactory::class,
+            Sabium\Middleware\MonologMiddleware::class => Sabium\Middleware\MonologMiddlewareFactory::class,
             Sabium\Middleware\PessoaBodyValidator::class => Sabium\Middleware\PessoaBodyValidatorFactory::class,
             Sabium\Middleware\PessoaEndpointValidator::class => Sabium\Middleware\PessoaEndpointValidatorFactory::class,
         ],

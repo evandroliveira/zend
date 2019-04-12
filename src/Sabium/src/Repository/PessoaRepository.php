@@ -5,6 +5,9 @@ namespace Sabium\Repository;
 use Doctrine\ORM\EntityRepository;
 use Sabium\Entity\Pessoa;
 use PHPUnit\Runner\Exception;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 
 class PessoaRepository extends EntityRepository
 {
@@ -31,6 +34,39 @@ class PessoaRepository extends EntityRepository
             }
 
         } catch (Exceptioin $e) {  }
+    }
+
+    public function getLog()
+    {
+        $stream = new StreamHandler(__DIR__.'/logger.log', Logger::DEBUG);
+        $firephp = new FirePHPHandler();
+
+        // Create the main logger of the app
+        $logger = new Logger('my_logger');
+        $logger->pushHandler($stream);
+        $logger->pushHandler($firephp);
+
+// Create a logger for the security-related stuff with a different channel
+        $securityLogger = new Logger('security');
+        $securityLogger->pushHandler($stream);
+        $securityLogger->pushHandler($firephp);
+
+        // Or clone the first one to only change the channel
+        $securityLogger = $logger->withName('security');
+
+        $data = date("d-m-y");
+        $hora = date("H:i:s");
+        $ip = $_SERVER['REMOTE_ADDR'];
+
+        //Nome do arquivo:
+        $arquivo = "Logger_$data.txt";
+
+        //Texto a ser impresso no log:
+        $texto = "[$hora][$ip]> $msg \n";
+
+        $manipular = fopen("$arquivo", "a+b");
+        fwrite($manipular, $texto);
+        fclose($manipular);
     }
 
     public function updateById(Pessoa $pessoa)
