@@ -12,12 +12,12 @@ class JMSFactory
     {
         $loader = require __DIR__ . '/../../../../vendor/autoload.php';
         AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
-        AnnotationRegistry::registerAutoloadNamespace('Symfony\Component\Validator\Constraints', '/vendor/symfony/validator');
+        //AnnotationRegistry::registerAutoloadNamespace('Symfony\Component\Validator\Constraints', '/vendor/symfony/validator');
 
-        AnnotationRegistry::registerAutoloadNamespace(
-            "Symfony\Component\Validator\Constraints",
-            'vendor/symfony/validator'
-        );
+        // AnnotationRegistry::registerAutoloadNamespace(
+        //     "Symfony\Component\Validator\Constraints",
+        //     'vendor/symfony/validator'
+        // );
 
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy(
             new \JMS\Serializer\Naming\SerializedNameAnnotationStrategy(

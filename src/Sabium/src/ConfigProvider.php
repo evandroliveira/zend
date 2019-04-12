@@ -4,12 +4,15 @@ declare (strict_types = 1);
 
 namespace Sabium;
 
-use Zend\Expressive\Application;
-use ContainerInteropDoctrine\EntityManagerFactory;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Validator\Validation;
 use JMS\Serializer\Serializer;
+use Doctrine\ORM\EntityManager;
+use Sabium\Container\JMSFactory;
+use Zend\Expressive\Application;
+use Sabium\Handler\CreatePessoaFactory;
+use Sabium\Handler\CreatePessoaHandler;
+use Symfony\Component\Validator\Validation;
 use Sabium\Service\Validation\ObjectValidator;
+use ContainerInteropDoctrine\EntityManagerFactory;
 
 /**
  * The configuration provider for the Sabium module
@@ -48,10 +51,10 @@ class ConfigProvider
             'factories'  => [
                 'sabium-db' => Container\ConnectionFactory::class,
                 EntityManager::class => EntityManagerFactory::class,
-                Serializer::class => \Sabium\Container\JMSFactory::class,
+                'serializer' => JMSFactory::class,
                 Validation::class => Container\ValidationFactory::class,
                 ObjectValidator::class => Service\Validation\ObjectValidatorFactory::class,
-                Handler\CreatePessoaHandler::class => Handler\CreatePessoaFactory::class,
+                CreatePessoaHandler::class => CreatePessoaFactory::class,
                 Handler\UpdatePessoaHandler::class => Handler\UpdatePessoaHandlerFactory::class,
                 Handler\RetrievePessoaHandler::class => Handler\RetrievePessoaFactory::class,
                 Handler\DeletePessoaHandler::class => Handler\DeletePessoaHandlerFactory::class,

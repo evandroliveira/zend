@@ -5,10 +5,11 @@ declare (strict_types = 1);
 namespace Sabium\Handler;
 
 use Psr\Http\Message\ResponseInterface;
+use Sabium\Repository\PessoaRepository;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\TextResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Sabium\Repository\PessoaRepository;
-use Zend\Diactoros\Response\TextResponse;
 
 class DeletePessoaHandler implements RequestHandlerInterface
 {
@@ -21,16 +22,7 @@ class DeletePessoaHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $id = $request->getAttribute('id');
-        if (!empty($id)) {
-            $result = $this->repository->deleteById($id);
-        } else {
-            $result = $this->repository->deleteAll();
-        }
-
-        return new TextResponse(
-            $this->serializer->serialize($result, 'json'),
-            200,
-            ['Content-Type' => ['application/json']]
-        );
+        $result = $this->repository->deleteById($id);
+        return new JsonResponse('Person deleted');
     }
 }

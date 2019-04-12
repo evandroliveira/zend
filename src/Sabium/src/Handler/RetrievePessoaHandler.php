@@ -10,9 +10,13 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Sabium\Repository\PessoaRepository;
 use Zend\Diactoros\Response\TextResponse;
+use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\EmptyResponse;
 
 class RetrievePessoaHandler implements RequestHandlerInterface
 {
+    protected $repository;
+    protected $serializer;
     public function __construct(PessoaRepository $repository, $serializer)
     {
         $this->repository = $repository;
@@ -21,16 +25,22 @@ class RetrievePessoaHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $id = $request->getAttribute('id');
+        $id = (int)$request->getAttribute('id');
+        
         if (!empty($id)) {
             $result = $this->repository->findById($id);
-        } else {
+            return new TextResponse(
+                $this->serializer->serialize($result, 'json'),
+                200,
+                ['Content-Type' => ['application/json']]
+            );
+        }
+        
+        return new EmptyResponse(400);
+        /*else {
             $result = $this->repository->findAll();
         }
-        return new TextResponse(
-            $this->serializer->serialize($result, 'json'),
-            200,
-            ['Content-Type' => ['application/json']]
-        );
+       /* */
+
     }
 }

@@ -14,32 +14,20 @@ use Zend\Diactoros\Response\JsonResponse;
 
 class CreatePessoaHandler implements RequestHandlerInterface
 {
-    public function __construct(PessoaRepository $repository, $serializer, $validation, $objectValidator)
+    public function __construct($repository, $serializer)
     {
         $this->repository = $repository;
         $this->serializer = $serializer;
-        $this->validation = $validation;
-        $this->objectValidator = $objectValidator;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $resultBody = $this->serializer->deserialize($request->getBody()->getContents(), Pessoa::class, 'json');
+        $dados = $request->getAttribute(Pessoa::class);
+        
+        $retorno = $this->repository->insert($dados);
 
-        if (!$this->objectValidator->validate($resultBody)) {
-            return new JsonResponse($this->objectValidator->getErrors(), 400);
-        }
-        $result = $this->repository->insert($resultBody);
-        return $this->response($result, 200);
-    }
+        return new JsonResponse('OK');
 
-    private function response($result, $code): ResponseInterface
-    {
-        return new TextResponse(
-            $this->serializer->serialize($result, 'json'),
-            $code,
-            ['Content-Type' => ['application/json']]
-        );
     }
 }
 

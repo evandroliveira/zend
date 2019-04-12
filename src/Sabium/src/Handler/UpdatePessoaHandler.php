@@ -10,6 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Sabium\Repository\PessoaRepository;
 use Zend\Diactoros\Response\TextResponse;
 use Sabium\Entity\Pessoa;
+use Zend\Diactoros\Response\JsonResponse;
 
 class UpdatePessoaHandler implements RequestHandlerInterface
 {
@@ -21,13 +22,10 @@ class UpdatePessoaHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $resultBody = $this->serializer->deserialize($request->getBody()->getContents(), Pessoa::class, 'json');
-        $result = $this->repository->updateById($resultBody);
+        $dados = $request->getAttribute(Pessoa::class);
 
-        return new TextResponse(
-            $this->serializer->serialize($result, 'json'),
-            200,
-            ['Content-Type' => ['application/json']]
-        );
+        $retorno = $this->repository->updateById($dados);
+
+        return new JsonResponse('OK');
     }
 }

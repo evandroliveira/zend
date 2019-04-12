@@ -15,7 +15,7 @@ class DeletePessoaHandlerFactory
     {
         $entityManager = $container->get('Doctrine\ORM\EntityManager');
         $repository = $entityManager->getRepository(Pessoa::class);
-        $serializer = $container->get(Serializer::class);
+        $serializer = $container->get('serializer');
         return new DeletePessoaHandler($repository, $serializer);
     }
 }

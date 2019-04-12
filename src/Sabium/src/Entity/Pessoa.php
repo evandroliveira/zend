@@ -72,11 +72,11 @@ class Pessoa
     private $cceRg;
 
     /**
-      * @var DateTime
-      * @ORM\@Column(type="datetime" name="datacriacao" nullable=false) 
-      * @JMS\Type("DateTime<'Y-m-d'>")
-      * @Assert\NotBlank(message="O campo data de criação é obrigatório)
-      */
+    * @var \DateTime|null
+    * @Type("DateTime<'Y-m-d'>")
+    * @Assert\NotBlank(message="Data de criação é obrigatório")
+    * @ORM\Column(name="datacriacao", type="date", nullable=true)
+    */
     private $datacriacao;
 
     

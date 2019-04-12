@@ -73,6 +73,7 @@ class PessoaRepository extends EntityRepository
     public function findById($idcnpj_cpf)
     {
         $em = $this->getEntityManager();
+       
         return $em->getRepository(Pessoa::class)->findBy(array('idcnpj_cpf' => $idcnpj_cpf));
     }
 
